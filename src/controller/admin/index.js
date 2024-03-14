@@ -68,10 +68,24 @@ const uploadImg = (req, res) => {
           const publicUrl = `https://firebasestorage.googleapis.com/v0/b/ecommerce-2bad9.appspot.com/o/${fileUpload.name}?alt=media&token=6d5b298b-0c9c-41bc-98e7-31c9be269231`
           res.status(200).send({
                URLImage: publicUrl,
+               fileName: fileUpload.name,
           })
      })
 
      blobStream.end(file.buffer)
+}
+const deleteImage = (req, res) => {
+     const { fileName } = req.body
+     const bucket = admin.storage().bucket()
+     const file = bucket.file(fileName)
+     file.delete()
+          .then(() => {
+               res.status(200).send("Delete image successfully")
+          })
+          .catch((err) => {
+               console.log(err)
+               res.status(500).send("Error delete image")
+          })
 }
 
 const addProduct = (req, res) => {
@@ -321,4 +335,5 @@ export default {
      addProduct: addProduct,
      deleteProduct: deleteProduct,
      updateProduct: updateProduct,
+     deleteImage: deleteImage,
 }

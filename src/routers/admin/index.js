@@ -14,8 +14,14 @@ const roleAdmin = (app) => {
 
           admin.uploadImg
      )
+     router.delete(
+          "/delete",
+          upload.single("image"),
+
+          admin.deleteImage
+     )
      router.post("/addProduct", admin.addProduct)
-     router.post("/uploadImg", admin.uploadImg)
+
      router.delete("/deleteProduct", admin.deleteProduct)
      router.put("/updateProduct", admin.updateProduct)
 
